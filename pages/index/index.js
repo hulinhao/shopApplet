@@ -7,20 +7,21 @@ Page({
     motto: '你好、晶彩！',
     userInfo: {},
     array: ['元宵节', '端午节', '中秋节', '春节'],
-    index: 0
+    index: 0,
+    dataList:[],
   },
   goCake: function (e) {
     var brand = e.currentTarget.dataset.brand;
-    if(brand&&brand==1){
-      base.cake.tab=1;
+    if(brand){
+      base.cake.tab=brand;
     }
     wx.switchTab({ url: '../cake/cake' });
   },
   goDetail: function (e) {
-    var nm = e.currentTarget.dataset.pname;
-    var b = e.currentTarget.dataset.brand;
+    var pNo = e.currentTarget.dataset.pno;
+    var pId = e.currentTarget.dataset.pid;
     wx.navigateTo({
-      url: '../cakeDetail/cakeDetail?pname=' + nm+"&brand="+(b||0)
+      url: '../cakeDetail/cakeDetail?pNo=' + pNo+"&pId="+(pId||0)
     })
   },
   bindPickerChange: function (e) {
@@ -45,7 +46,11 @@ Page({
   },
   onLoad: function () {
     var that = this
-
+    base.post({},base.path.shop.index+"list","加载数据.....",function(data){
+      var l = data.data || [];
+      that.setData({ dataList: l });
+  
+    });
   },
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh()

@@ -4,45 +4,32 @@ Page({
     data: {
         tab:1,
         list: [],
-        listJz: []
+        type:null,
+        typeList:[],
+        productList:[],
     },
     onLoad: function () {
         var _this = this;
-        var _dic = base.cake.getCache();
-        if (_dic) {
-            this.setlist(_dic);
-        } else {
-            this.initData();
-        }
-        //极致系列
-        var _jzlist = [];
-        var dic = jzData.data;
-        for (var i in dic) {
-            _jzlist.push({
-                name: i,
-                price: dic[i].CakeType[0].CurrentPrice + ".00",
-                des: dic[i].Means,
-                imgUrl: base.path.res + dic[i].img
-            })
-        }
-        this.setData({ "listJz": _jzlist });
+        var that = this;
+        base.post({},base.path.shop.cake+"type","...",function(data){
+            var type = data.data || [];
+            that.setData({
+                type: type[0],
+                typeList: type.slice(1,type.length),
+                tab:type[0].id
+            });
+        });
     },
     onShow: function (e) {
+        var that = this;
         if (base.cake.tab != null) {
             this.setData({ "tab": base.cake.tab });
             base.cake.tab = null;
         }
-        // if (base.version.current != base.version.getValue()) {
-
-        //     this.initData();
-        // }
+        that.getCake();
     },
     initData: function () {
         var _this = this;
-        // var _dic = base.cake.getCache();
-        // if (_dic) {
-        //     _this.setlist(_dic);
-        // } else {
         base.get({ c: "Product", m: "GetAllProduct", City: "上海" }, function (d) {
             var data = d.data;
             if (data.Status == "ok") {
@@ -50,7 +37,6 @@ Page({
                 _this.setlist(data.Tag);
             }
         })
-        //}
 
     },
     setlist: function (dic) {
@@ -84,13 +70,21 @@ Page({
     changeTab: function (e) {
         var d = e.currentTarget.dataset.index;
         this.setData({ tab: d });
+        this.getCake();
+    },
+    getCake:function(){
+        var that = this;
+        base.post({"typeId":that.data.tab},base.path.shop.cake+"product","...",function(data){
+            var p = data.data || [];
+            that.setData({ productList: p });
+        });
     },
     goDetail: function (e) {
-        var d = e.currentTarget.dataset.pname;
-        var b = e.currentTarget.dataset.brand;
-        if (d) {
+        var pNo = e.currentTarget.dataset.pno;
+        var pId = e.currentTarget.dataset.pid;
+        if (pId) {
             wx.navigateTo({
-                url: '../cakeDetail/cakeDetail?pname=' + d + "&brand=" + b
+                url: '../cakeDetail/cakeDetail?pNo=' + pNo + "&pId=" + pId
             })
         }
     }

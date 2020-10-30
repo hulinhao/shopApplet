@@ -13,11 +13,19 @@ App({
         res: "https://res.bestcake.com/",
         www:"http://localhost:9419/",
         shop:{
-            weixin:"http://localhost:8080/appletApi/weixin/",
-            user:"http://localhost:8080/appletApi/user/",
-            cart:"http://localhost:8080/appletApi/cart/",
-            
+            weixin:"http://localhost:8888/appletApi/weixin/",
+            user:"http://localhost:8888/appletApi/user/",
+            cart:"http://localhost:8888/appletApi/cart/",
+            index:"http://localhost:8888/appletApi/index/",
+            cake:"http://localhost:8888/appletApi/product/",
         }
+        // shop:{
+        //     weixin:"http://hulinhao.iok.la/appletApi/weixin/",
+        //     user:"http://hulinhao.iok.la/appletApi/user/",
+        //     cart:"http://hulinhao.iok.la/appletApi/cart/",
+        //     index:"http://hulinhao.iok.la/appletApi/index/",
+        //     cake:"http://hulinhao.iok.la/appletApi/product/",
+        // }
     },
     user: {
         islogin: function (tp) {

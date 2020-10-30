@@ -3,62 +3,25 @@ var jzData = require('../../utils/jzData.js');
 var preview=require('../../utils/preview.js');
 Page({
     data: {
-        brand: 0,
-        loaded: false,
+        pNo: null,
+        pId: null,
+        detail:null,
         cartNum: 0,
     },
     onLoad: function (e) {
-        var brand = e && e.brand ? e.brand : 0;
-        this.setData({ brand: brand });
+        var pNo = e.pNo;
+        var pId = e.pId;
+        this.setData({ pNo: pNo,pId:pId});
         var _this = this;
-        if (brand == 0) {//经典系列
-            var key = e.pname || "极地牛乳";
-            var obj = base.cake.getByName(key);
-            if (obj) {
-                _this.setData({ loaded: true });
-                this.initCake(obj);
-            } else {
-                base.get({ c: "Product", m: "GetCakeByName", City: "上海", ProName: key }, function (d) {
-                    _this.setData({ loaded: true });
-                    var data = d.data;
-                    if (data.Status == "ok") {
-                        _this.initCake(data.Tag);
-                    }
-                });
-            }
-        } else {//吉致系列
-            var obj = jzData.data[e.pname];
-            this.initCake(obj);
-            _this.setData({ loaded: true });
-        }
+        this.initCake();
     },
-    initCake: function (d) {
-        var _this = this;
-        wx.setNavigationBarTitle({ title: d.Name });
-        this.setData({
-            imgMinList: (function () {
-                var _list = [];
-                if (_this.data.brand == 0) {
-                    for (var i = 1; i <= 4; i++) {
-                        _list.push(base.path.res + "images-2/classical-detail/" + d.Name + "/w_400/" + d.Name + "-" + i + ".jpg");
-                    }
-                } else {
-                    _list.push(base.path.res + "images/ksk/item/w_400/" + d.Name + ".jpg");
-                }
-                return _list;
-            })(),
-            name: d.Name,
-            num: 1,
-            des: d.Means,
-            resource: d.Resourse,
-            fresh: d.KeepFresh,
-            current: {
-                size: d.CakeType[0].Size,
-                price: d.CakeType[0].CurrentPrice,
-                supplyno: d.CakeType[0].SupplyNo,
-                des: d.CakeType[0].PackingList
-            },
-            CakeType: d.CakeType
+    initCake: function () {
+        var that = this;
+        base.post({"pId":that.data.pId},base.path.shop.cake+"detail","...",function(data){
+            var p = data.data || [];
+            that.setData({ detail: p });
+            wx.setNavigationBarTitle({ title: p.name });
+            console.log(JSON.stringify(p));
         });
     },
     onShow: function (e) {
