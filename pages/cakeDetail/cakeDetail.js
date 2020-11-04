@@ -7,21 +7,21 @@ Page({
         pId: null,
         detail:null,
         cartNum: 0,
+        selAttr:0,
+        num:0,
     },
     onLoad: function (e) {
         var pNo = e.pNo;
         var pId = e.pId;
         this.setData({ pNo: pNo,pId:pId});
-        var _this = this;
         this.initCake();
     },
     initCake: function () {
         var that = this;
         base.post({"pId":that.data.pId},base.path.shop.cake+"detail","...",function(data){
             var p = data.data || [];
-            that.setData({ detail: p });
+            that.setData({ detail: p,selAttr: p.pattrs[0].id});
             wx.setNavigationBarTitle({ title: p.name });
-            console.log(JSON.stringify(p));
         });
     },
     onShow: function (e) {
@@ -31,42 +31,39 @@ Page({
         preview.show(this.data.name,this.data.brand,e.currentTarget.dataset.index)
     },
     changeCurrent: function (e) {
+        var that = this;
         var s = e.currentTarget.dataset.size;
         var p = e.currentTarget.dataset.price;
-        var sno = e.currentTarget.dataset.supplyno;
-        if (s && p && this.data.current.size != s) {
-            this.setData({ "current.size": s, "current.price": p, "current.supplyno": sno })
+        var attid = e.currentTarget.dataset.selattr;
+        if (s && p && attid) {
+            that.setData({selAttr: attid})
         }
     },
     addCart: function () {
-        var _this = this;
-        if (base.cart.add({
-            supplyno: this.data.current.supplyno,
-            name: this.data.name,
-            size: this.data.current.size,
-            price: this.data.current.price,
-            num: this.data.num,
-            brand:this.data.brand
-        })) {
-            this.setData({ cartNum: base.cart.getNum() })
-            base.modal({
-                title: '加入成功！',
-                content: "跳转到购物车或留在当前页",
-                showCancel: true,
-                cancelText: "留在此页",
-                confirmText: "去购物车",
-                success: function (res) {
-                    if (res.confirm) {
-                        _this.goc();
+        base.checkLogin();
+        var that = this;
+        base.post({"pId":that.data.pId,"attrId":that.data.selAttr,"num":that.data.num},base.path.shop.cart+"addCart","",function(data){
+            if (data.code === "S0000") {
+                that.setData({ cartNum: that.data.cartNum+1});
+                base.modal({
+                    title: '加入成功！',
+                    content: "跳转到购物车或留在当前页",
+                    showCancel: true,
+                    cancelText: "留在此页",
+                    confirmText: "去购物车",
+                    success: function (res) {
+                        if (res.confirm) {
+                            that.goc();
+                        }
                     }
-                }
-            })
-            // base.toast({
-            //     title: '加入成功',
-            //     icon: 'success',
-            //     duration: 1500
-            // })
-        }
+                })
+                // base.toast({
+                //     title: '加入成功',
+                //     icon: 'success',
+                //     duration: 1500
+                // })
+            }
+        });
     },
     goCart: function () {
         if (!base.cart.exist(this.data.current.supplyno)) {

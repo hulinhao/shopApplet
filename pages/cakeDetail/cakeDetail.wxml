@@ -15,16 +15,14 @@
       </view>
     </view>
     <view class="size">
-      <view class="sitem {{detail.minPrice==p.discountPrice?'sitem-on':'sitem-out'}}" data-supplyno="{{p.id}}" data-size="{{p.size}}" data-price="{{p.discountPrice}}" catchtap="changeCurrent" 
-                  wx:for="{{detail.pattrs}}" wx:for-item="p" wx:key="Id">
-        <text>{{s.size}}</text>
+      <view class="sitem {{selAttr == p.id?'sitem-on':'sitem-out'}}" data-selattr="{{p.id}}" data-size="{{p.size}}" data-price="{{p.discountPrice}}" catchtap="changeCurrent" 
+                  wx:for="{{detail.pattrs}}" wx:for-item="p"  wx:for-index="idx" wx:key="id">
+        <text>{{p.size}}</text>
       </view>
     </view>
-    <view class="sm">主要原料：
-      <text>{{detail.remark}}</text>
-    </view>
-    <view class="sm">贮存条件：
-      <text>{{detail.remark}}</text>
+
+    <view class="sm">故事：
+      <text>{{detail.content}}</text>
     </view>
   </view>
   <view class="tool">

@@ -20,11 +20,11 @@ App({
             cake:"http://localhost:8888/appletApi/product/",
         }
         // shop:{
-        //     weixin:"http://hulinhao.iok.la/appletApi/weixin/",
-        //     user:"http://hulinhao.iok.la/appletApi/user/",
-        //     cart:"http://hulinhao.iok.la/appletApi/cart/",
-        //     index:"http://hulinhao.iok.la/appletApi/index/",
-        //     cake:"http://hulinhao.iok.la/appletApi/product/",
+        //     weixin:"https://173ca97752.51mypc.cn/appletApi/weixin/",
+        //     user:"https://173ca97752.51mypc.cn/appletApi/user/",
+        //     cart:"https://173ca97752.51mypc.cn/appletApi/cart/",
+        //     index:"https://173ca97752.51mypc.cn/appletApi/index/",
+        //     cake:"https://173ca97752.51mypc.cn/appletApi/product/",
         // }
     },
     user: {
@@ -58,20 +58,7 @@ App({
     cart: {
         key: "cart",
         ref: "", // 购物车返回的页面
-        add: function (p) {
-            var re = false;
-            if (p.supplyno && p.price && p.size && p.name && p.num) {
-                var dic = wx.getStorageSync(this.key) || {};
-                if (p.supplyno in dic) {
-                    dic[p.supplyno].num += p.num;
-                } else {
-                    dic[p.supplyno] = { name: p.name, price: p.price, size: p.size, num: p.num, brand: p.brand }
-                }
-                wx.setStorageSync(this.key, dic);
-                re = true;
-            }
-            return re;
-        },
+
         exist: function (sno) {
             var re = false;
             var dic = wx.getStorageSync(this.key) || {};
