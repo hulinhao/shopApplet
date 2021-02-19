@@ -9,6 +9,10 @@ Page({
         cartNum: 0,
         selAttr:0,
         num:0,
+        btn:{
+            disabled:false,
+            text:'加入购物车'
+        },
     },
     onLoad: function (e) {
         var pNo = e.pNo;
@@ -45,23 +49,12 @@ Page({
         base.post({"pId":that.data.pId,"attrId":that.data.selAttr,"num":that.data.num},base.path.shop.cart+"addCart","",function(data){
             if (data.code === "S0000") {
                 that.setData({ cartNum: that.data.cartNum+1});
-                base.modal({
-                    title: '加入成功！',
-                    content: "跳转到购物车或留在当前页",
-                    showCancel: true,
-                    cancelText: "留在此页",
-                    confirmText: "去购物车",
-                    success: function (res) {
-                        if (res.confirm) {
-                            that.goc();
-                        }
+                that.setData({
+                    btn:{
+                        disabled:true,
+                        text:'已加入购物车'
                     }
                 })
-                // base.toast({
-                //     title: '加入成功',
-                //     icon: 'success',
-                //     duration: 1500
-                // })
             }
         });
     },
@@ -82,12 +75,6 @@ Page({
         base.cart.ref = "../cakeDetail/cakeDetail?pname=" + _this.data.name + "&brand=" + _this.data.brand;
         wx.switchTab({
             url: "../cart/cart"
-        })
-    },
-    _go: function () {
-        var _this = this;
-        wx.navigateTo({
-            url: "../buy/buy?type="+_this.data.brand+"&price=" + _this.data.current.price
         })
     }
 });

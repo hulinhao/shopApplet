@@ -1,16 +1,4 @@
 
-<!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-  <view class="cityselect">
-    {{array[index]}}
-  </view>
-</picker> -->
-<!-- <view class="m" bindtap="goCake" data-brand="0">
-  <image class="mg" src="{{path+'jd.jpg'}}" ></image>
-</view>
-<view class="m" data-pname="极地牛乳" data-brand="0" catchtap="goDetail">
-  <image class="mg-1" src="{{path+'001.jpg'}}" ></image>
-  <image class="mg-2" src="{{path+'001.png'}}" style="width: 400rpx;" ></image>
-</view> -->
 <block wx:for="{{dataList}}" wx:for-item="t" wx:key="id">
   <view class="m" bindtap="goCake" data-brand="{{t.typeId}}">
     <image class="mg" src="{{t.img}}" ></image>

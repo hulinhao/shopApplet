@@ -1,5 +1,8 @@
 page{background-color: #f0f0f0;}
 
+.userView{
+  background-image: url(./background.png)
+}
 .userinfo {
   display: flex;
   flex-direction: column;

@@ -22,11 +22,12 @@
     </view>
 
     <view class="sm">故事：
-      <text>{{detail.content}}</text>
+      <text selectable>{{detail.content}}</text>
     </view>
   </view>
   <view class="tool">
-    <view class="tbtn add" catchtap="addCart">加入购物车(<text class="cart-num">{{cartNum}}</text>)</view>
-    <view class="tbtn buy" catchtap="_go">购买等额优惠券</view>
+    <!-- <image src="../../icon/home.png"></image> -->
+    <image src="../../icon/cart.png" class="cart"></image><text class="cart-num">{{cartNum}}</text>
+    <button type="primary" plain="true" catchtap="addCart" disabled="{{btn.disabled}}" >{{btn.text}}</button>
   </view>
 </view>
