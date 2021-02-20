@@ -1,9 +1,74 @@
 /**index.wxss**/
-page{background-color: #fff;}
-.cityselect{position: fixed;width: 150rpx;height: 30px;line-height: 30px; font-size: 12pt; z-index: 1000;background-color: #000;text-align: center;box-shadow: 0 0 5px 0 #fff;border:1rpx solid #fff;  border-radius: 15px;opacity: 0.5;left:20rpx;top: 20rpx;color: #fff;}
+page{margin: 0;background: url(https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=298941244,2271134158&fm=26&gp=0.jpg) repeat-x;}
+ 
+#wrap {
+  position: relative;
+  -webkit-perspective: 600px;
+  border: 1px black solid;
+  left: 50%;
+}
+   
+#head {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin-top: 150px;
+  -webkit-transform-style: preserve-3d;
+  -webkit-animation: donghua 5s linear 0s infinite;
+  border: 1px blueviolet solid
+}
+   
+#head div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  border: 1px solid red;
+  text-align: center;
+  line-height: 200px;
+}
+   
+#head div:nth-child(1) {
+  -webkit-transform: rotateY(0deg) translateZ(200px);
+  background-size: cover;
+}
+   
+#head div:nth-child(2) {
+  -webkit-transform: rotateY(60deg) translateZ(300px);
+  background-size: cover;
+}
+   
+#head div:nth-child(3) {
+  -webkit-transform: rotateY(120deg) translateZ(200px);
+  background-size: cover;
+}
+   
+#head div:nth-child(4) {
+  -webkit-transform: rotateY(180deg) translateZ(300px);
+  background-size: cover;
+}
+   
+#head div:nth-child(5) {
+  -webkit-transform: rotateY(240deg) translateZ(200px);
+  background-size: cover;
+}
 
-.m{background-color: #fff;margin: 0 0 20rpx;}
-.m .mg{height: 500rpx;width: 550rpx;}
-.m .mg-1{height:440rpx;width:100%;}
-
-
+#head div:nth-child(6) {
+  -webkit-transform: rotateY(300deg) translateZ(200px);
+  background-size: cover;
+}
+   
+@-webkit-keyframes donghua {
+  0% {
+   transform: rotateX(5deg) rotateY(360deg);
+  }
+   
+  50% {
+   transform: rotateX(-5deg) rotateY(180deg);
+  }
+   
+  100% {
+   transform: rotateX(5deg) rotateY(0deg);
+  }
+}

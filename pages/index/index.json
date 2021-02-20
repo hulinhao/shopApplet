@@ -1,5 +1,6 @@
 {
-    "navigationBarTitleText": "晶彩包装",
-    "frontColor":"#000000",
-    "backgroundColor": "#fff"
+    "navigationBarTitleText": "晶彩",
+    "frontColor":"#fff",
+    "backgroundColor": "#fff",
+    "enablePullDownRefresh": true
 }

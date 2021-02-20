@@ -4,11 +4,17 @@ var base = getApp();
 Page({
   data: {
     path:base.path.res+"smallexe/index/",
-    motto: '你好、晶彩！',
-    userInfo: {},
-    array: ['元宵节', '端午节', '中秋节', '春节'],
     index: 0,
-    dataList:[],
+    product:null,
+    types:[]
+  },
+  getData:function(){
+    var that = this
+    base.post({},base.path.shop.index+"list","加载数据.....",function(data){
+      var l = data.data || [];
+      that.setData({ product: l.productVo,types:l.typeList });
+      wx.stopPullDownRefresh() //停止刷新
+    });
   },
   goCake: function (e) {
     var brand = e.currentTarget.dataset.brand;
@@ -24,42 +30,23 @@ Page({
       url: '../cakeDetail/cakeDetail?pNo=' + pNo+"&pId="+(pId||0)
     })
   },
-  bindPickerChange: function (e) {
-    this.setData({
-      index: e.detail.value
-    })
-  },
+
   //事件处理函数
   bindViewTap: function () {
-    wx.showActionSheet({
+    wx.showActionSheet({ //唤起微信选择
       itemList: ['A', 'B', 'C'],
       success: function (res) {
         if (!res.cancel) {
-          console.log(res.tapIndex)
+          console.log(res.tapIndex+1)
         }
       }
     })
-
-    //wx.navigateTo({
-    //url: '../socket/socket'
-    //})
   },
-  onLoad: function () {
-    var that = this
-    base.post({},base.path.shop.index+"list","加载数据.....",function(data){
-      var l = data.data || [];
-      that.setData({ dataList: l });
-  
-    });
+  onLoad: function (e) {
+    this.getData()
   },
-  onPullDownRefresh: function () {
-    wx.stopPullDownRefresh()
+  //下拉刷新   
+  onPullDownRefresh: function () { 
+    this.getData()
   },
-  onShareAppMessage: function () {
-    return {
-      title: '晶彩包装（体验版）',
-      desc: '',
-      path: '/pages/index/index?id=123'
-    }
-  }
 })

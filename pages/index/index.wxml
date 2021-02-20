@@ -1,4 +1,4 @@
-
+<!-- <button catchtap="bindViewTap">测试按钮{{id}}</button>
 <block wx:for="{{dataList}}" wx:for-item="t" wx:key="id">
   <view class="m" bindtap="goCake" data-brand="{{t.typeId}}">
     <image class="mg" src="{{t.img}}" ></image>
@@ -9,4 +9,11 @@
       <view>{{p.name}}</view>
     </view>
   </block>
-</block>
+</block> -->
+<div id="wrap">
+		<div id="head">
+      <block wx:for="{{product.img}}" wx:for-item="p" wx:key="id"></block>
+        <div style="background: url({{p}});"></div>
+      </block>
+		</div>
+</div>

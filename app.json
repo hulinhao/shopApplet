@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/user/user",
+    
     "pages/index/index",
     "pages/success/success",
     "pages/payment/payment",
@@ -9,7 +9,7 @@
     "pages/cakeDetail/cakeDetail",
     "pages/phone/phone",
     "pages/cart/cart",
-    
+    "pages/user/user",
     "pages/login/login",
     "pages/logs/logs",
     "pages/user/myorder/myorder",

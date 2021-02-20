@@ -1,17 +1,17 @@
-<view class="userView">
   <view class="u" >
     <view class="logo" bindtap="changeimg">
-      <image src="{{userInfo.wxAvatarUrl}}"></image>
+      <image src="{{userInfo.wxAvatarUrl}}" wx:if="{{userInfo.wxAvatarUrl}}"/>
+      <image wx:else src="../../icon/my-2.png"/>
     </view>
     <view class="des">
-      <view class="uname">{{userInfo.name}}</view>
-      <view class="phone">{{userInfo.phone==null?'':userInfo.phone}}</view>
+      <view class="uname" >{{userInfo.name == null? '游客' : userInfo.name}}</view>
+      <view class="phone">{{userInfo.phone==null? 'xxxxxxxxxxxxx' : userInfo.phone}}</view>
     </view>
   </view>
   <view class="ua">
     <view class="jzb tab">
       <view class="amount">
-        <text>{{cb}}</text>元</view>
+        <text>{{cb}}</text></view>
       <view class="nm">晶币</view>
     </view>
     <view class="cpn tab">
@@ -28,6 +28,7 @@
   <view class="ub">
     <view class="item item-a" >
       <view class="icon">
+       <image src="../../icon/dd.png"></image>
       </view>
       <view class="tit" >
         <navigator url="../user/myorder/myorder" open-type="navigate" hover-class="navigator-hover">我的订单</navigator>
@@ -36,6 +37,7 @@
     </view>
     <view class="item item-a">
       <view class="icon">
+        <image src="../../icon/shdz.png"></image>
       </view>
       <view class="tit" >
         <navigator url="../user/myaddress/myaddress" open-type="navigate" hover-class="navigator-hover">收货地址</navigator>
@@ -44,6 +46,7 @@
     </view>
       <view class="item item-a">
       <view class="icon">
+        <image src="../../icon/yhq.png"></image>
       </view>
       <view class="tit" >
         <navigator url="../user/mycoupons/mycoupons" open-type="navigate" hover-class="navigator-hover">我的优惠券</navigator>
@@ -52,6 +55,7 @@
     </view>
     <view class="item  ">
       <view class="icon">
+        <image src="../../icon/tcdl.png"></image>
       </view>
       <view class="tit"  bindtap="exist">
         退出登录
@@ -59,4 +63,3 @@
       <view class="con"></view>
     </view>
   </view>
-</view>

@@ -24,6 +24,7 @@
 </view>
 
 <view class="sub {{phoneOk&&codeOk?'sub-ok':'sub-dis'}}" bindtap="login">登 录</view> -->
+<!-- <web-view src= "https://www.baidu.com/"></web-view> -->
 
 <!--个人授权登录-->
 <view wx:if="{{!userInfo}}" style="text-align:center;margin-top:150px;">

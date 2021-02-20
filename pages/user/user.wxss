@@ -1,8 +1,5 @@
-page{background-color: #f0f0f0;}
+page{background: url(https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1853233161,1595706506&fm=26&gp=0.jpg) repeat-x;}
 
-.userView{
-  background-image: url(./background.png)
-}
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -12,27 +9,28 @@ page{background-color: #f0f0f0;}
   margin-top: 200px;
 }
 
-.u{display: flex;padding:15px 0; flex-direction:row; background-color:#576b95}
+.u{display: flex;padding:15px 0; flex-direction:row;}
 .u .logo{padding:0 20px;}
 .u .logo image{width: 60px; height: 60px; border-radius: 50%; border:2px solid #fff;}
 
-.des .uname{ color: #fff;font-weight:bold;font-size:15pt; padding: 2px 0;}
-.des .phone{ color: #fff;font-size:13pt;}
+.des .uname{ color: #fff;font-weight:bold;font-size:13pt; padding: 5px 0;font-family:SimSun;padding-top: 22px;}
+.des .phone{ color: #fff;font-size:11pt;font-family:SimSun;}
 
 
-.ua{display: flex;flex-direction:row; background-color: #fff; }
+.ua{display: flex;flex-direction:row; background-color: rgba(0, 0, 0, 0.1); }
 .ua .tab{padding:15px 0; }
-.ua .jzb{flex: 1;border-bottom:1rpx solid #ccc;}
-.ua .cpn{flex: 1;border-left:1rpx solid #ccc;border-right:1rpx solid #ccc;border-bottom:1rpx solid #ccc;}
-.ua .exp{flex: 1;border-bottom:1rpx solid #ccc;}
+.ua .jzb{flex: 1;border-bottom:1rpx solid #ccc;border-left:1rpx solid #ccc;border-top:1rpx solid #ccc;}
+.ua .cpn{flex: 1;border-left:1rpx solid #ccc;border-right:1rpx solid #ccc;border-bottom:1rpx solid #ccc;border-top:1rpx solid #ccc;}
+.ua .exp{flex: 1;border-bottom:1rpx solid #ccc;border-top:1rpx solid #ccc;border-right:rpx solid #ccc;}
 .ua .amount{text-align: center;font-size: 8pt;}
 .ua .amount text{font-size: 15pt; font-weight: bold; padding: 0 3px;}
-.ua .nm{text-align: center;font-size: 10pt; color: #666;}
+.ua .nm{text-align: center;font-size: 10pt; color: #fff;}
 .ua .jzb .amount{color: #f00;}
 
-.ub{margin-top: 10px; border-top:1rpx solid #ccc;border-bottom:1rpx solid #ccc; background-color: #fff;}
-.ub .item{height:45px;line-height: 45px; display: flex;flex-direction:row;}
+.ub{margin-top: 30px; border-top:1rpx solid #ccc;border-bottom:1rpx solid #ccc; background-color: rgba(0, 0, 0, 0.5);}
+.ub .item{height:45px;line-height: 45px; display: flex;flex-direction:row; padding-left: 3px 0;}
 .ub .item .icon{width: 50px;height: 30px;}
-.ub .item .tit{width: 300rpx; font-size: 13pt;}
+.ub .item .icon image{max-height: 50%; max-width: 50%; padding: 10px 10px;padding-top: 18px;}
+.ub .item .tit{width: 300rpx; font-size: 12pt; color: #fff; font-family:SimSun;}
 .ub .item .con{flex: 1; font-size: 12pt}
 .item-a .tit,.item-a .con{border-bottom: 1rpx solid #ddd;}
