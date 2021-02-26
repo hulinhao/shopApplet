@@ -6,13 +6,25 @@ Page({
     path:base.path.res+"smallexe/index/",
     index: 0,
     product:null,
-    types:[]
+    types:[],
+    imgs:[]
   },
   getData:function(){
     var that = this
     base.post({},base.path.shop.index+"list","加载数据.....",function(data){
       var l = data.data || [];
-      that.setData({ product: l.productVo,types:l.typeList });
+      var product = l.productVo;
+      var imgs = [];
+      var i = 0;
+      if(product.img != null && product.img.length>0){
+        while(imgs.length<6){
+          product.img.forEach(img => {
+            imgs.push(img);
+          });
+        }
+      }
+      imgs = imgs.splice(0,6);
+      that.setData({ product: product,types:l.typeList,imgs:imgs });
       wx.stopPullDownRefresh() //停止刷新
     });
   },
@@ -33,11 +45,14 @@ Page({
 
   //事件处理函数
   bindViewTap: function () {
+    var that = this;
     wx.showActionSheet({ //唤起微信选择
-      itemList: ['A', 'B', 'C'],
+      itemList: that.types,
       success: function (res) {
         if (!res.cancel) {
           console.log(res.tapIndex+1)
+        }else{
+          console.log(res)
         }
       }
     })

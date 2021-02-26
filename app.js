@@ -14,96 +14,23 @@ App({
         www:"http://localhost:9419/",
         shop:{
             weixin:"http://localhost:8888/appletApi/weixin/",
-            user:"http://localhost:8888/appletApi/user/",
-            cart:"http://localhost:8888/appletApi/cart/",
             index:"http://localhost:8888/appletApi/index/",
-            cake:"http://localhost:8888/appletApi/product/",
+            user:"http://localhost:8888/appletApi/auth/user/",
+            cart:"http://localhost:8888/appletApi/auth/cart/",
+            cake:"http://localhost:8888/appletApi/auth/product/",
+            addr:"http://localhost:8888/appletApi/auth/addr/",
         }
         // shop:{
         //     weixin:"https://173ca97752.51mypc.cn/appletApi/weixin/",
-        //     user:"https://173ca97752.51mypc.cn/appletApi/user/",
-        //     cart:"https://173ca97752.51mypc.cn/appletApi/cart/",
         //     index:"https://173ca97752.51mypc.cn/appletApi/index/",
-        //     cake:"https://173ca97752.51mypc.cn/appletApi/product/",
+        //     user:"https://173ca97752.51mypc.cn/appletApi/auth/user/",
+        //     cart:"https://173ca97752.51mypc.cn/appletApi/auth/cart/",
+        //     cake:"https://173ca97752.51mypc.cn/appletApi/auth/product/",
+        //     addr:"http://localhost:8888/appletApi/auth/addr/",
         // }
-    },
-    user: {
-        islogin: function (tp) {
-            var re = false;
-            if (this.token != null) {
-                re = true;
-            } else {
-                if (tp == true) {
-                    wx.navigateTo({
-                        url: '../phone/phone'
-                    })
-                }
-            }
-            return re;
-        },
-        key: "userkey",
-        setCache: function (obj) {
-            wx.setStorageSync(this.key, obj);
-        },
-        getCache: function () {
-            return wx.getStorageSync(this.key);
-        },        
-        clear: function () {
-            wx.removeStorageSync(this.key);
-        }
     },
     city: {
 
-    },
-    cart: {
-        key: "cart",
-        ref: "", // 购物车返回的页面
-
-        exist: function (sno) {
-            var re = false;
-            var dic = wx.getStorageSync(this.key) || {};
-            if (sno in dic) {
-                re = true;
-            }
-            return re;
-        },
-        remove: function (sno) {
-            var dic = wx.getStorageSync(this.key) || {};
-            if (sno in dic) {
-                delete dic[sno];
-                wx.setStorageSync(this.key, dic);
-            }
-        },
-        getNum: function () {
-            var n = 0;
-            var dic = wx.getStorageSync(this.key) || {}
-            for (var i in dic) {
-                n += dic[i].num;
-            }
-            return n;
-        },
-        num: function (sno, n) {
-            var dic = wx.getStorageSync(this.key) || {};
-            if (sno in dic) {
-                if (n > 0) {
-                    dic[sno].num = n;
-                } else {
-                    delete dic[sno];
-                }
-                wx.setStorageSync(this.key, dic);
-            }
-        },
-        getList: function () {
-            var list = [];
-            var dic = wx.getStorageSync(this.key);
-            for (var p in dic) {
-                list.push({ supplyno: p, name: dic[p].name, price: dic[p].price, size: dic[p].size, num: dic[p].num, brand: dic[p].brand });
-            }
-            return list;
-        },
-        clear: function () {
-            wx.removeStorageSync(this.key);
-        }
     },
     cake: {
         tab: null,

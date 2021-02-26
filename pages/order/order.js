@@ -16,16 +16,15 @@ Page({
         arrTimeIndex: 0,
         addr: "",
         addresslist: [],
-        addrShow: false,
+        addrShow: true,
         scrollTop: 100,
         selectedID: -1,
         oinfo: {
-            OrderSource: "all|web",
-            Consignee: "",
-            Cellphone: "",
-            City: "",
-            District: "",
-            Address: "",
+            province: "",
+            city: "",
+            area: "",
+            detailAddr: "",
+            phone: "",
             DeliveryDate: "",
             DeliveryTime: "",
             Payment: "",
@@ -65,12 +64,12 @@ Page({
         for (var i = 0; i < _this.data.addresslist.length; i++) {
             if (_this.data.addresslist[i].id == id) {
                 _this.setData({
-                    "oinfo.City": _this.data.addresslist[i].city,
-                    "oinfo.District": _this.data.addresslist[i].area,
-                    "oinfo.Consignee": _this.data.addresslist[i].name,
-                    "oinfo.Cellphone": _this.data.addresslist[i].phone,
-                    "oinfo.Address": _this.data.addresslist[i].address,
-                    addr: _this.data.addresslist[i].city + ' ' + _this.data.addresslist[i].area + ' ' + _this.data.addresslist[i].address,
+                    "oinfo.province": _this.data.addresslist[i].province,
+                    "oinfo.city": _this.data.addresslist[i].city,
+                    "oinfo.area": _this.data.addresslist[i].area,
+                    "oinfo.detailAddr": _this.data.addresslist[i].detailAddr,
+                    "oinfo.phone": _this.data.addresslist[i].phone,
+                    addr: _this.data.addresslist[i].province + _this.data.addresslist[i].city + _this.data.addresslist[i].area,
                     addrShow: false
                 });
                 break;
@@ -78,46 +77,14 @@ Page({
         }
     },
     onLoad: function (e) {
-        var _this = this;
-        var now=new Date();
-        if (base.user.islogin()) {
-            if (e.from && e.from == "cart") {
-                var l = base.cart.getList();
-                for (var i = 0; i < l.length; i++) {
-                    l[i].img = base.path.res + 'images/ksk/item/w_127/' + l[i].name + '.jpg'
-
-                }
-                _this.setData({
-                    plist: l,
-                    dateStart: common.addDate(now,1),
-                    dateEnd: common.addDate(now,90)
-                });
-            }
-        }
         this.getAddressList();
-        console.log(this.data.plist);
     },
     getAddressList: function () {
-        var _this = this;
-
-        base.get({ c: "UserCenter", m: "GetAllAddress" }, function (d) {
-            var dt = d.data;
-            if (dt.Status == "ok") {
-                var arr = [];
-                for (var i = 0; i < dt.Tag.length; i++) {
-                    var obj = dt.Tag[i];
-                    if (i == 0) {
-                        obj.isDefault = true;
-                    }
-                    arr.push(obj);
-
-                }
-                _this.setData({
-                    addresslist: arr
-                })
-
-            }
-        })
+        var that = this;
+        base.post({},base.path.shop.addr+"getAddr","",function(data){
+            var l = data.data || [];
+            that.setData({ addresslist: l });
+        });
     },
     onShow: function (e) {
 

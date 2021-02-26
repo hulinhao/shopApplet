@@ -24,7 +24,6 @@ page{margin: 0;background: url(https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6
   left: 0;
   width: 200px;
   height: 200px;
-  border: 1px solid red;
   text-align: center;
   line-height: 200px;
 }

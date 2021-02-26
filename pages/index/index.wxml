@@ -1,19 +1,11 @@
-<!-- <button catchtap="bindViewTap">测试按钮{{id}}</button>
-<block wx:for="{{dataList}}" wx:for-item="t" wx:key="id">
-  <view class="m" bindtap="goCake" data-brand="{{t.typeId}}">
-    <image class="mg" src="{{t.img}}" ></image>
-  </view>
-  <block wx:for="{{t.plist}}" wx:for-item="p" wx:key="id">
-    <view class="m" data-pno="{{p.productNo}}" data-pid="{{p.id}}" catchtap="goDetail">
-      <image class="mg-1" src="{{p.img}}" ></image>
-      <view>{{p.name}}</view>
-    </view>
-  </block>
-</block> -->
+<button catchtap="bindViewTap">测试按钮{{id}}</button>
+
 <div id="wrap">
 		<div id="head">
-      <block wx:for="{{product.img}}" wx:for-item="p" wx:key="id"></block>
-        <div style="background: url({{p}});"></div>
+      <block wx:for="{{imgs}}" wx:for-item="p" wx:key="id">
+        <div data-pno="{{product.productNo}}" data-pid="{{product.id}}" catchtap="goDetail">
+          <image src="{{p}}" style="width:100%;height:100%"></image>
+        </div>
       </block>
 		</div>
 </div>

@@ -4,19 +4,13 @@ Page({
     data: {
         plist: [],
         total: 0,
-        his: ""
     },
     onLoad: function (e) {
         base.checkLogin();
     },
     onShow: function (e) {
         var that = this;
-        if (base.cart.ref) {
-            that.setData({ his: base.cart.ref });
-            base.cart.ref = "";
-        }
         base.post({},base.path.shop.cart+"list","加载购物车...",function(data){
-            //var l = base.cart.getList();
             var l = data.data || [];
             for (var i = 0; i < l.length; i++) {
                 l[i].index = i;
@@ -25,13 +19,6 @@ Page({
             that.changeTotal();
         });
 
-    },
-    goBack: function () {
-        console.log("执行goBack");
-        var _this = this;
-        wx.navigateTo({
-            url: _this.data.his
-        })
     },
     previewImg: function (e) {
         preview.show(e.currentTarget.dataset.name,e.currentTarget.dataset.brand,e.currentTarget.dataset.index)
@@ -47,50 +34,49 @@ Page({
         this.setData({ total: t });
     },
     changeNum: function (e) {
+        var that = this;
         var t = e.currentTarget.dataset.type;
         var index = e.currentTarget.dataset.index;
         var re = this.data.plist[index].num + parseInt(t);
-        if (re < 100 && re > 0) {
-            var key = "plist[" + index + "].num";
-            var obj = {}; obj[key] = re;
-            this.setData(obj);
-            this.changeTotal();
-            base.cart.num(this.data.plist[index].supplyno, obj[key]);
+        var cartid = e.currentTarget.dataset.cartid;
+        if(re < 1){
+            wx.showModal({
+                title: '',
+                content: '数量不多啦，确认删除？',
+                cancelColor:'#ccc',
+                confirmColor:'red',
+                success (res) {
+                  if (res.confirm) {
+                    //删除
+                    that.del(e);
+                  }
+                }
+              })              
+        }else{
+            base.post({"id":cartid,"num":re},base.path.shop.cart+"updateCart","",function(data){
+                if (data.code === "S0000") {
+                    var key = "plist[" + index + "].num";
+                    var obj = {}; 
+                    obj[key] = re;
+                    that.setData(obj);
+                    that.changeTotal();
+                }
+            });       
         }
     },
     del: function (e) {
+        var that = this;
         var index = e.currentTarget.dataset.index;
-        var sno = this.data.plist[index].supplyno;
-        //var l = this.data.plist;
-        // var _l = [];
-        //var obj = { total: 0 };
-        // for (var i = 0; i < l.length; i++) {
-        //     if (i != index) {
-        //         // _l.push(l[i]);
-        //         obj.total += l[i].price * l[i].num;
-        //     }
-        // }
-
-        var key1 = "plist[" + index + "].del";
-        var obj = {};
-        obj[key1] = true;
-
-
-
-        // var ani = wx.createAnimation({
-        //     duration: 300,
-        //     timingFunction:"ease"
-        // })
-        // ani.height(0).step();
-         var key = "plist[" + index + "]._ani";
-        // obj[key] = ani.export();
-
-        this.setData(obj);
-
-
-
-        this.changeTotal();
-        base.cart.remove(sno);
+        var cartid = e.currentTarget.dataset.cartid;
+        base.post({"id":cartid},base.path.shop.cart+"delCart","",function(data){
+            if (data.code === "S0000") {
+                var key1 = "plist[" + index + "].del";
+                var obj = {};
+                obj[key1] = true;
+                that.setData(obj);
+                that.changeTotal();
+            }
+        });        
     },
 
     clearCart: function () {
@@ -99,68 +85,27 @@ Page({
             base.modal({
                 title: "确认清空所有商品？", confirmText: "清空", success: function (res) {
                     if (res.confirm) {
-                        _this.setData({ plist: [], total: 0 });
-                        base.cart.clear();
+                        base.post({},base.path.shop.cart+"clearCart","",function(data){
+                            if (data.code === "S0000") {
+                                _this.setData({ plist: [], total: 0 });       
+                            }
+                        });                      
                     }
                 }
             })
         }
     },
     goOrder: function () {
-     //   this.ing();
         if (this.data.plist.length > 0 && this.data.total > 0) {
             wx.navigateTo({
                 url: '../order/order?from=cart'
             })
         } else {
             base.modal({
-                title: '购物车无商品',
+                title: '去添加更多商品吧',
                 showCancel: false
             })
         }
-    },
-    tips: ["尽请期待!", "不用点了、暂时下不了单！", "真de、不骗你！", "不信再试试？！", "没错吧？！", "您可以去其它地方转转了！", "嘿、还挺执着！", "就喜欢你这股子劲！", "但没有任何niao用！", "你已经陷入无限轮回..."],
-    //,"......", ".........", "好吧、你赢了！", "你即将获得一份随机奖励！", "just for your 执着！", "不过先声明、我们真的还未开放下单！"],
-    tipsN: 0,
-    ing: function () {
-        if (this.tipsN >= this.tips.length) {
-            this.tipsN = 0;
-        }
-
-        base.modal({
-            title: this.tips[this.tipsN],
-            showCancel: false
-        });
-        this.tipsN += 1;
-
-
-
-        // if (this.tipsN < this.tips.length) {
-        //     base.modal({
-        //         title: this.tips[this.tipsN],
-        //         showCancel: false
-        //     });
-        //     this.tipsN += 1;
-        // }
-        // else {
-        //     base.modal({
-        //         title: "恭喜",
-        //         content: "您已免费获得价值88元经典系列蛋糕优惠券,限领一次",
-        //         cancelText: "放弃机会",
-        //         confirmText: "立即领取",
-        //         showCancel: true,
-        //         success: function (res) {
-        //             if (res.confirm) {
-        //                 wx.navigateTo({
-        //                     url: "../buy/buy?type=0&price=88&&pay=free"
-        //                 })
-        //             } else {
-
-        //             }
-        //         }
-        //     })
-        // }
-
     },
     p: {
         currentIndex: -1,
