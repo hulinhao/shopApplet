@@ -4,11 +4,17 @@ Page({
     data: {
         plist: [],
         total: 0,
+        login:false
     },
     onLoad: function (e) {
         base.checkLogin();
     },
     onShow: function (e) {
+        if(!base.isLogin()){
+            this.setData({login:false})
+        }else{
+            this.setData({login:true})
+        }
         var that = this;
         base.post({},base.path.shop.cart+"list","加载购物车...",function(data){
             var l = data.data || [];
@@ -97,8 +103,9 @@ Page({
     },
     goOrder: function () {
         if (this.data.plist.length > 0 && this.data.total > 0) {
+            var plist= this.data.plist;
             wx.navigateTo({
-                url: '../order/order?from=cart'
+                url: '../order/order?plist='+JSON.stringify(plist)
             })
         } else {
             base.modal({
@@ -156,7 +163,6 @@ Page({
         this.setData(obj);
     },
     ptouchsatrt: function (e) {
-
         var index = e.currentTarget.dataset.index;
         if (this.p.currentIndex >= 0) {
             this.moveTo(this.p.currentIndex, 0);

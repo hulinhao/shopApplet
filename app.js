@@ -15,42 +15,21 @@ App({
         shop:{
             weixin:"http://localhost:8888/appletApi/weixin/",
             index:"http://localhost:8888/appletApi/index/",
+            cake:"http://localhost:8888/appletApi/product/",
             user:"http://localhost:8888/appletApi/auth/user/",
             cart:"http://localhost:8888/appletApi/auth/cart/",
-            cake:"http://localhost:8888/appletApi/auth/product/",
             addr:"http://localhost:8888/appletApi/auth/addr/",
+            order:"http://localhost:8888/appletApi/auth/order/",
         }
         // shop:{
         //     weixin:"https://173ca97752.51mypc.cn/appletApi/weixin/",
         //     index:"https://173ca97752.51mypc.cn/appletApi/index/",
+        //     cake:"http://localhost:8888/appletApi/product/",
         //     user:"https://173ca97752.51mypc.cn/appletApi/auth/user/",
         //     cart:"https://173ca97752.51mypc.cn/appletApi/auth/cart/",
-        //     cake:"https://173ca97752.51mypc.cn/appletApi/auth/product/",
         //     addr:"http://localhost:8888/appletApi/auth/addr/",
+        //     order:"http://localhost:8888/appletApi/auth/order/",
         // }
-    },
-    city: {
-
-    },
-    cake: {
-        tab: null,
-        key: "cake",
-        setCache: function (obj) {
-            wx.setStorageSync(this.key, obj);
-            var vs = getApp().version;
-            wx.setStorageSync(vs.key, vs.current);//设置当前版本号
-        },
-        getCache: function () {
-            return wx.getStorageSync(this.key);
-        },
-        getByName: function (nm) {
-            var p = null;
-            var dic = wx.getStorageSync(this.key) || {};
-            if (nm in dic) {
-                p = dic[nm];
-            }
-            return p;
-        }
     },
     onLaunch: function () {
         //调用API从本地缓存中获取数据     
@@ -149,7 +128,16 @@ App({
             wx.navigateTo({
                 url: '../phone/phone'
             });
-        }           
+            return false;
+        }
+        return true;           
+    },
+    isLogin:function(){
+        var _this = this;
+        if(_this.token == null || _this.token == '' || _this.token.length == 0){
+            return false;
+        }
+        return true;           
     },
     get: function (par,url,tit,fun) {
         var _this = this;
@@ -197,6 +185,14 @@ App({
             },
             method: "POST",
             success: function (res) {
+                //判断登录状态
+                // console.info(res.data)
+                // if(res.data == ''||res.data == undefined || res.data == null){
+                //     wx.navigateTo({
+                //         url: '../phone/phone'
+                //     });
+                //     return;
+                // }
                 fun(res.data);
             },
             fail: function (e) {

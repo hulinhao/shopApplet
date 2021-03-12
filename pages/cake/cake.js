@@ -9,24 +9,20 @@ Page({
         productList:[],
     },
     onLoad: function () {
-        var _this = this;
         var that = this;
         base.post({},base.path.shop.cake+"type","...",function(data){
             var type = data.data || [];
-            that.setData({
-                type: type[0],
-                typeList: type.slice(1,type.length),
-                tab:type[0].id
-            });
+            if(type.length>0){
+                that.setData({
+                    type: type[0],
+                    typeList: type.slice(1,type.length),
+                    tab:type[0].id
+                });
+            }
         });
     },
     onShow: function (e) {
-        var that = this;
-        if (base.cake.tab != null) {
-            this.setData({ "tab": base.cake.tab });
-            base.cake.tab = null;
-        }
-        that.getCake();
+        this.getCake();
     },
     initData: function () {
         var _this = this;

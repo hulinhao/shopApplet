@@ -29,7 +29,7 @@ Page({
         });
     },
     onShow: function (e) {
-        this.setData({ cartNum: base.cart.getNum() });
+        
     },
     previewImg: function (e) {
         preview.show(this.data.name,this.data.brand,e.currentTarget.dataset.index)

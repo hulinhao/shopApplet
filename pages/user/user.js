@@ -8,7 +8,8 @@ Page({
         exp: 260,  // 经验值
         levels: 3, //等级
         coupon: 5, //优惠券
-        headimg: "https://m.bestcake.com/images/icon_user.jpg"
+        headimg: "https://m.bestcake.com/images/icon_user.jpg",
+        login:false,
     },
 
     exist: function () {
@@ -102,6 +103,11 @@ Page({
         base.checkLogin();
     },
     onShow:function(){
+        if(!base.isLogin()){
+            this.setData({login:false})
+        }else{
+            this.setData({login:true})
+        }
         var that = this;
         // 获取用户信息
         that.setData({

@@ -1,3 +1,4 @@
+<block wx:if="{{login}}">
 <view class="tit">
   <text class="tit-text">详情(滑动可移除)</text>
   <view class="tit-tool" catchtap="clearCart">清空</view>
@@ -30,3 +31,9 @@
   <view class="gobuy" bindtap="goOrder">确认下单</view>
 </view>
 <view class="tool-layer"></view>
+</block>
+<block wx:else >
+  <view>
+    <a href="../login/">去登陆</a>
+  </view>
+</block>
